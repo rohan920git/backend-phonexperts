@@ -3,6 +3,7 @@ import Razorpay from 'razorpay';
 import crypto from 'crypto'
 import dotenv from 'dotenv'
 import db from '../db.js'
+dotenv.config();
 import jwt from 'jsonwebtoken'
 import { Result } from 'express-validator';
 
@@ -23,8 +24,8 @@ router.route("/generateorder").post(async(req,res)=>{
        return res.status(401).json({message:"varification falid"})
        }
     const razorpay = new Razorpay({
-        key_id: 'rzp_test_EHTvWKSbnJinGK',
-           key_secret: 'j9oPWAKCEQ6M3wxqhD1HBLXb'
+        key_id: process.env.R_KEY_ID,
+           key_secret:process.env.R_KEY_SECRET
         })
      
         const options = {
@@ -62,7 +63,7 @@ router.route('/verifypayment').post(async(req, res)=>{
   const body = razorpay_order_id + "|" + razorpay_payment_id;
 
   const expectedSignature = crypto
-    .createHmac("sha256", "j9oPWAKCEQ6M3wxqhD1HBLXb")
+    .createHmac("sha256", process.env.R_KEY_SECRET)
     .update(body.toString())
     .digest("hex");
 
