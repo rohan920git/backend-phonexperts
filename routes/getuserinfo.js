@@ -16,18 +16,12 @@ dotenv.config()
 const jwtsec =process.env.JWTSEC;
 router.get('/userprofile/:token',async(req,res)=>{
    const token = req.params.token;
-   let tokendata;
+   const tokendata = await verifyJwt(token);
 
-     jwt.verify(token,jwtsec,(err,code)=>{
-        if(err)
-        {
-           return res.json(err);
-        }
-        else{
-            tokendata = code;
-        }
+   if(!tokendata){
 
-     })
+      return res.status(100).json({sueccess:false,message:"user not found"})
+   }
     const user_id = tokendata.id;
 
 
@@ -43,18 +37,14 @@ router.get('/userprofile/:token',async(req,res)=>{
 })
 router.put("/savename/:token",async(req,res)=>{
    const token = req.params.token;
-   let tokendata;
+  
    const name = req.body.name;
-     jwt.verify(token,jwtsec,(err,code)=>{
-        if(err)
-        {
-           return res.json(err);
-        }
-        else{
-            tokendata = code;
-        }
+   const tokendata = await verifyJwt(token);
 
-     })
+   if(!tokendata){
+
+      return res.status(100).json({sueccess:false,message:"user not found"})
+   }
     const user_id = tokendata.id;
     db.query("update users set name_=? where id = ?",[name,user_id],async(err, result)=>{
            if(err){
@@ -65,18 +55,14 @@ router.put("/savename/:token",async(req,res)=>{
 })
 router.put("/saveusername/:token",async(req,res)=>{
    const token = req.params.token;
-   let tokendata;
+   
    const username = req.body.username;
-     jwt.verify(token,jwtsec,(err,code)=>{
-        if(err)
-        {
-           return res.json(err);
-        }
-        else{
-            tokendata = code;
-        }
+   const tokendata = await verifyJwt(token);
 
-     })
+   if(!tokendata){
+
+      return res.status(100).json({sueccess:false,message:"user not found"})
+   }
     const user_id = tokendata.id;
     db.query("update users set user_name = ? where id = ?",[username,user_id],async(err, result)=>{
            if(err){

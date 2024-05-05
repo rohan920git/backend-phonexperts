@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/static/css/main.ee1b4457.css",
+    "main.js": "/static/js/main.e9c27a40.js",
+    "static/js/787.3ffe4880.chunk.js": "/static/js/787.3ffe4880.chunk.js",
+    "static/media/smartPhone.jpg": "/static/media/smartPhone.a8b112efa2de34202e80.jpg",
+    "static/media/subbanner.jpg": "/static/media/subbanner.2e1ffc7a37ff0799e623.jpg",
+    "static/media/samsumg.jpg": "/static/media/samsumg.f13330888f91b1e5c605.jpg",
+    "static/media/success.png": "/static/media/success.77e07e6471b21644912a.png",
+    "static/media/logo.svg": "/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/index.html",
+    "main.ee1b4457.css.map": "/static/css/main.ee1b4457.css.map",
+    "main.e9c27a40.js.map": "/static/js/main.e9c27a40.js.map",
+    "787.3ffe4880.chunk.js.map": "/static/js/787.3ffe4880.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ee1b4457.css",
+    "static/js/main.e9c27a40.js"
+  ]
+}

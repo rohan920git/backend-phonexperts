@@ -28,21 +28,23 @@ import multer from 'multer';
 import { uploadOnCloudinary } from './utility/uploadOncloudinary.js';
 const upload = multer({ storage })
 const PORT  = 5000;
-app.use((req, res, next)=>{
-    res.setHeader("Access-Control-Allow-Origin","http://localhost:3000")
-    res.header(
-        "Allow-Control-Allow-Headers",
-        "Origin, X-Requested-With,Content-Type,Accept"
-    )
-    next();
-})
-// allow Cross-domain requests 
+app.use(cors({
+    "origin": ["http://localhost:3000",
+    "http://localhost:3001",
+    "http://localhost:8080",
+    "https://rtvsso.onrender.com"
+  ],
+    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE", 
+    "credentials":true
+  }))
+
+
 
  
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+// app.use(cors({ origin:"http://localhost:3000", credentials: true }));
 app.use(cookieParser())
-
-
+import addproduct from './routes/addproduct.js'
+app.use(express.static('build'))
 app.use(bp.json())
 app.use(express.urlencoded({extended:false}));
 app.use('/',users);
@@ -50,6 +52,12 @@ app.use('/',getdata);
 app.use('/',getdetails);
 app.use('/',cart_items);
 app.use('/',userinfo);
+app.use('/',addproduct)
+import orders from './routes/order.js'
+app.use('/',orders)
+app.post("/test",(req, res)=>{
+    return res.json({roha:PORT});
+})
 app.post('/profileupload',upload.single('image'),async(req, res)=>{
 console.log(req.body);
 console.log(req.file);
@@ -57,6 +65,6 @@ const response = await uploadOnCloudinary(req.file.path);
 console.log(response)
 return res.json("photo saved");
 })
-app.listen(PORT, ()=>{
+app.listen(PORT,"0.0.0.0",()=>{
     console.log("server started");
 })

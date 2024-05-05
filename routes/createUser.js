@@ -103,20 +103,23 @@ router.post("/login",[
   body("email").isEmail(),
   body("password").isLength(6)
 ], async (req, res)=>{
+ 
     const errors = validationResult(req);
     if(!errors.isEmpty()){
-      res.json({success:false,"error" : errors,message:"Credentials are not in right formate"})
+      res.status(401).json({success:false,"error" : errors,message:"Credentials are not in right formate"})
     }
-
+    console.log("here2")
   
     db.query('SELECT * FROM users WHERE email = ?',[req.body.email], async(err,result)=>{
       if(err){
+          console.log(err);
           res.json({success:false,"error":err});
       }
       if( result.length === 0 ){
         return res.status(400).json({success:false , message:"email does not exist"});
 
       } 
+      console.log("here4")
      const user = result[0];
      let pwdcompare =  await bcrypt.compare(req.body.password , user.password_);
      if(!(pwdcompare)){
@@ -126,7 +129,7 @@ router.post("/login",[
                                      success:false});
      }
      const token =  jwt.sign({id: user.id, username: user.username} , jwtsec);
-     
+     console.log("here5")
      res.cookie("authCookie",token,{})
      res.json({ success: true, token: token });
     }
